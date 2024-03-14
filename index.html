@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="img/jogo-da-velha.png">
+
+    <!-- Fontes -->
+
+    <!-- Comic Neue -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap" rel="stylesheet">
+
+    <!-- Roboto Condensed -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <title>Old Woman Game</title>
+</head>
+<body>
+    <div class="space">
+    </div>
+    
+    
+    <h1>Jogo da Velha</h1>
+
+    <div class="board" id="board">
+        <div class="cell" onclick="cellClicked(0)"></div>
+        <div class="cell" onclick="cellClicked(1)"></div>
+        <div class="cell" onclick="cellClicked(2)"></div>
+        <div class="cell" onclick="cellClicked(3)"></div>
+        <div class="cell" onclick="cellClicked(4)"></div>
+        <div class="cell" onclick="cellClicked(5)"></div>
+        <div class="cell" onclick="cellClicked(6)"></div>
+        <div class="cell" onclick="cellClicked(7)"></div>
+        <div class="cell" onclick="cellClicked(8)"></div>
+    </div>
+
+
+
+    <script>
+
+        /*Talvez para arrumar um possivel erro de funcionamento do código 
+        1- Buscar os valores dos indices, altera-los para outros valores diferentes
+        2- Fazer uma verificação de indices (ja mudados), selecionados 
+        por X ou O e ver se a soma deles bate com alguma dos valores para vencer
+        */
+
+        let currentPlayer ='X';
+        let board = ['', '', '', '', '', '', '', '', '', ];
+
+        function cellClicked(index) {
+            if (board[index] === '') {
+                board[index] = currentPlayer;
+                document.getElementById('board').children[index].innerHTML = currentPlayer;
+                checkWinner();
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X'; //se o current player for = X ele troca para O, se não troca para X
+            }            
+        }
+
+        function checkWinner() {
+            const winConditions = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], 
+            [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]
+        ];
+        
+
+        for (let condition of winConditions) {
+            const [a, b, c] = condition;
+            if (board[a] !== '' && board [a] === board[b] && board [a] === board[c]) {
+                alert(`JOGADOR ${board[a]} VENCEU!`);
+                resetBoard();
+                return;
+            }
+        }
+
+        if (!board.includes('')) {
+            alert ('Deu velha LMAO');
+            resetBoard();
+        }
+    }
+
+    function resetBoard() {
+        currentPlayer = 'X';
+        board = ['','','','','','','','',''];
+        for (let i = 0; i < 9; i++) {
+            document.getElementById('board').children [i].innerText='';
+
+        }
+    }
+
+        
+    </script>
+</body>
+
+
+<footer>
+    <p>Desenvolvido por Guilherme Reis | Março 14 | 2024</p>
+</footer>
+</html>
